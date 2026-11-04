@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Ayman Hafez</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --bg:       #080808;
+  --surface:  #0f0f0f;
+  --surface2: #141414;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.12);
+  --accent:   #ff3c00;
+  --gold:     #c9a96e;
+  --text:     #f0ede6;
+  --muted:    rgba(240,237,230,.45);
+  --ff-display: 'Bebas Neue', sans-serif;
+  --ff-serif:   'Playfair Display', serif;
+  --ff-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── NOISE ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; opacity:.6;
+}
+
+/* ── GLOW BG ── */
+.bg-glow {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(255,60,0,.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 90% 80%, rgba(201,169,110,.05) 0%, transparent 70%);
+}
+
+/* ── CURSOR (desktop only) ── */
+@media(hover:hover){
+  .cursor {
+    position:fixed; width:10px; height:10px; border-radius:50%;
+    background:var(--accent); pointer-events:none; z-index:99999;
+    transform:translate(-50%,-50%); mix-blend-mode:difference;
+  }
+  .cursor-ring {
+    position:fixed; width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(255,60,0,.5); pointer-events:none; z-index:99998;
+    transform:translate(-50%,-50%); transition:all .18s ease;
+  }
+}
+@media(hover:none){
+  .cursor, .cursor-ring { display:none; }
+}
+
+/* ── HEADER ── */
+header {
+  position:fixed; top:0; left:0; width:100%; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 6%;
+  background:rgba(8,8,8,.85); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo-mark {
+  font-family:var(--ff-display);
+  font-size:22px; letter-spacing:4px; color:var(--text);
+  text-decoration:none;
+}
+.logo-mark span { color:var(--accent); }
+.back-btn {
+  display:flex; align-items:center; gap:8px;
+  font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; transition:.3s;
+}
+.back-btn:hover { color:var(--text); }
+.back-btn i { font-size:10px; transition:.3s; }
+.back-btn:hover i { transform:translateX(-3px); }
+
+/* ── MAIN LAYOUT ── */
+.contact-page {
+  position:relative; z-index:1;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  padding-top:80px;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  padding:80px 7% 80px 8%;
+  display:flex; flex-direction:column; justify-content:center;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.left-panel::before {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(255,60,0,.03) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+.eyebrow {
+  font-size:10px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold); margin-bottom:20px;
+  display:flex; align-items:center; gap:12px;
+  opacity:0; animation:fadeUp .7s .1s ease forwards;
+}
+.eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); }
+
+.page-title {
+  font-family:var(--ff-display);
+  font-size:clamp(54px,7vw,110px);
+  line-height:.88; letter-spacing:2px;
+  color:var(--text);
+  opacity:0; animation:fadeUp .8s .2s ease forwards;
+}
+.page-title span { display:block; color:var(--accent); }
+
+.page-sub {
+  margin-top:28px; max-width:380px;
+  font-size:15px; color:var(--muted); line-height:1.8;
+  opacity:0; animation:fadeUp .8s .32s ease forwards;
+}
+
+/* Contact Info Cards */
+.info-cards {
+  margin-top:52px;
+  display:flex; flex-direction:column; gap:16px;
+  opacity:0; animation:fadeUp .8s .44s ease forwards;
+}
+.info-card {
+  display:flex; align-items:center; gap:18px;
+  padding:20px 24px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  text-decoration:none;
+  transition:.35s cubic-bezier(.23,1,.32,1);
+  position:relative; overflow:hidden;
+}
+.info-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--accent); transform:scaleY(0); transform-origin:bottom;
+  transition:.35s cubic-bezier(.23,1,.32,1);
+}
+.info-card:hover {
+  border-color:rgba(255,60,0,.3);
+  background:#1a1a1a;
+  transform:translateX(6px);
+}
+.info-card:hover::before { transform:scaleY(1); }
+
+.info-icon {
+  width:46px; height:46px; border-radius:12px; flex-shrink:0;
+  background:rgba(255,60,0,.1); border:1px solid rgba(255,60,0,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:var(--accent);
+  transition:.3s;
+}
+.info-card:hover .info-icon { background:rgba(255,60,0,.2); transform:scale(1.08); }
+
+.info-content { flex:1; }
+.info-label {
+  font-size:10px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:4px;
+}
+.info-value {
+  font-size:15px; font-weight:500; color:var(--text);
+  word-break:break-all;
+}
+
+.info-arrow {
+  color:var(--muted); font-size:12px; transition:.3s;
+  opacity:0; transform:translateX(-4px);
+}
+.info-card:hover .info-arrow { opacity:1; transform:translateX(0); color:var(--accent); }
+
+/* Availability badge */
+.availability {
+  margin-top:40px;
+  display:flex; align-items:center; gap:10px;
+  opacity:0; animation:fadeUp .8s .56s ease forwards;
+}
+.avail-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 0 rgba(34,197,94,.4);
+  animation:pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+  0%   { box-shadow:0 0 0 0   rgba(34,197,94,.4); }
+  70%  { box-shadow:0 0 0 10px rgba(34,197,94,0);  }
+  100% { box-shadow:0 0 0 0   rgba(34,197,94,0);  }
+}
+.avail-text { font-size:13px; color:var(--muted); }
+.avail-text strong { color:#22c55e; font-weight:500; }
+
+/* ── RIGHT PANEL (FORM) ── */
+.right-panel {
+  padding:80px 8% 80px 7%;
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.form-header {
+  margin-bottom:40px;
+  opacity:0; animation:fadeUp .8s .2s ease forwards;
+}
+.form-title {
+  font-family:var(--ff-serif);
+  font-size:28px; font-weight:700; color:var(--text);
+  margin-bottom:8px;
+}
+.form-sub { font-size:13px; color:var(--muted); }
+
+/* Form */
+.contact-form {
+  display:flex; flex-direction:column; gap:20px;
+  opacity:0; animation:fadeUp .8s .32s ease forwards;
+}
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+.field-wrap { display:flex; flex-direction:column; gap:8px; }
+.field-wrap label {
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted); font-weight:500;
+}
+.field-wrap label span { color:var(--accent); margin-left:2px; }
+
+.field-wrap input,
+.field-wrap select,
+.field-wrap textarea {
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  padding:14px 18px;
+  font-family:var(--ff-body);
+  font-size:14px; color:var(--text);
+  outline:none;
+  transition:.3s;
+  width:100%;
+  resize:none;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.field-wrap input::placeholder,
+.field-wrap textarea::placeholder {
+  color:rgba(240,237,230,.2);
+}
+.field-wrap input:focus,
+.field-wrap select:focus,
+.field-wrap textarea:focus {
+  border-color:rgba(255,60,0,.5);
+  background:#141414;
+  box-shadow:0 0 0 3px rgba(255,60,0,.08);
+}
+
+/* Select arrow */
+.select-wrap { position:relative; }
+.select-wrap::after {
+  content:'\f078';
+  font-family:'Font Awesome 6 Free'; font-weight:900;
+  position:absolute; right:16px; top:50%; transform:translateY(-50%);
+  color:var(--muted); font-size:11px; pointer-events:none;
+}
+.field-wrap select { padding-right:40px; cursor:pointer; color:var(--text); }
+.field-wrap select option { background:#1a1a1a; color:var(--text); }
+
+.field-wrap textarea { min-height:130px; line-height:1.7; }
+
+/* Budget pills */
+.budget-pills {
+  display:flex; flex-wrap:wrap; gap:10px;
+}
+.budget-pill {
+  padding:8px 18px; border-radius:30px;
+  border:1px solid var(--border2);
+  background:transparent; color:var(--muted);
+  font-size:12px; font-family:var(--ff-body);
+  cursor:pointer; transition:.3s; white-space:nowrap;
+}
+.budget-pill:hover { border-color:rgba(255,60,0,.4); color:var(--text); }
+.budget-pill.active {
+  background:rgba(255,60,0,.15);
+  border-color:rgba(255,60,0,.5);
+  color:var(--text);
+}
+
+/* Submit */
+.submit-row {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:14px; margin-top:4px;
+}
+.submit-note { font-size:12px; color:var(--muted); }
+.submit-note i { color:var(--accent); margin-right:4px; }
+
+.btn-submit {
+  display:flex; align-items:center; gap:10px;
+  padding:16px 40px; border-radius:50px;
+  background:var(--accent); color:white;
+  font-family:var(--ff-body);
+  font-size:14px; font-weight:500; letter-spacing:.5px;
+  border:none; cursor:pointer; transition:.35s;
+  box-shadow:0 0 0 0 rgba(255,60,0,.4);
+  white-space:nowrap;
+}
+.btn-submit:hover {
+  background:#d92e00; transform:translateY(-3px);
+  box-shadow:0 16px 36px rgba(255,60,0,.35);
+}
+.btn-submit.loading {
+  opacity:.7; pointer-events:none;
+}
+.btn-submit .btn-icon { transition:.3s; }
+.btn-submit:hover .btn-icon { transform:translateX(3px); }
+
+/* ── SUCCESS STATE ── */
+.success-msg {
+  display:none;
+  flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:60px 40px;
+  gap:20px;
+}
+.success-msg.show { display:flex; }
+.success-icon {
+  width:72px; height:72px; border-radius:50%;
+  background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; color:#22c55e;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+.success-msg h3 {
+  font-family:var(--ff-serif); font-size:28px; font-weight:700; color:var(--text);
+}
+.success-msg p { font-size:14px; color:var(--muted); max-width:320px; line-height:1.7; }
+.btn-back-form {
+  padding:12px 28px; border-radius:30px;
+  border:1px solid var(--border2); background:transparent;
+  color:var(--muted); font-family:var(--ff-body); font-size:13px;
+  cursor:pointer; transition:.3s;
+}
+.btn-back-form:hover { border-color:var(--text); color:var(--text); }
+
+/* ── FOOTER ── */
+.contact-footer {
+  position:relative; z-index:1;
+  padding:28px 6%;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  border-top:1px solid var(--border);
+}
+.footer-logo { font-family:var(--ff-display); font-size:16px; letter-spacing:4px; color:rgba(255,255,255,.3); }
+.footer-copy { font-size:11px; color:rgba(255,255,255,.18); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .contact-page { grid-template-columns:1fr; }
+  .left-panel { border-right:none; border-bottom:1px solid var(--border); padding:60px 6%; }
+  .right-panel { padding:60px 6%; }
+}
+@media(max-width:560px){
+  header { padding:16px 5%; }
+  .logo-mark { font-size:18px; letter-spacing:3px; }
+  .back-btn span { display:none; }
+  .contact-page { padding-top:68px; }
+  .left-panel { padding:48px 5% 40px; }
+  .right-panel { padding:40px 5% 60px; }
+  .page-title { font-size:clamp(48px,14vw,72px); }
+  .page-sub { font-size:14px; }
+  .form-row { grid-template-columns:1fr; }
+  .submit-row { flex-direction:column; align-items:stretch; }
+  .btn-submit { justify-content:center; }
+  .info-card { padding:16px 18px; gap:14px; }
+  .info-value { font-size:13px; }
+  .budget-pill { padding:7px 14px; font-size:11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="logo-mark">AY<span>.</span>HAFEZ</a>
+  <a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> <span>Back to Portfolio</span>
+  </a>
+</header>
+
+<!-- MAIN -->
+<main class="contact-page">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="eyebrow">Let's Connect</div>
+    <h1 class="page-title">
+      GET IN
+      <span>TOUCH</span>
+    </h1>
+    <p class="page-sub">
+      Have a project in mind? I'd love to hear about it. Send me a message and let's create something extraordinary together.
+    </p>
+
+    <div class="info-cards">
+
+      <!-- Email -->
+      <a href="mailto:ayman.muhamad.hafez@gmail.com" class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div class="info-content">
+          <div class="info-label">Email Address</div>
+          <div class="info-value">ayman.muhamad.hafez@gmail.com</div>
+        </div>
+        <i class="fa-solid fa-arrow-up-right info-arrow"></i>
+      </a>
+
+      <!-- Phone -->
+      <a href="tel:+201070137261" class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+        <div class="info-content">
+          <div class="info-label">Phone Number</div>
+          <div class="info-value">+20 10 70 13 7261</div>
+        </div>
+        <i class="fa-solid fa-arrow-up-right info-arrow"></i>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/201070137261" target="_blank" class="info-card">
+        <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="info-content">
+          <div class="info-label">WhatsApp</div>
+          <div class="info-value">Available on WhatsApp</div>
+        </div>
+        <i class="fa-solid fa-arrow-up-right info-arrow"></i>
+      </a>
+
+    </div>
+
+    <div class="availability">
+      <div class="avail-dot"></div>
+      <div class="avail-text">Currently <strong>Available</strong> for new projects</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- Form Header -->
+    <div class="form-header">
+      <h2 class="form-title">Send a Message</h2>
+      <p class="form-sub">Fill in the details below and I'll get back to you within 24 hours.</p>
+    </div>
+
+    <!-- Form -->
+    <form class="contact-form" id="contactForm" novalidate>
+
+      <!-- Name + Email -->
+      <div class="form-row">
+        <div class="field-wrap">
+          <label>Your Name <span>*</span></label>
+          <input type="text" name="name" placeholder="John Doe" required>
+        </div>
+        <div class="field-wrap">
+          <label>Email Address <span>*</span></label>
+          <input type="email" name="email" placeholder="john@example.com" required>
+        </div>
+      </div>
+
+      <!-- Phone + Subject -->
+      <div class="form-row">
+        <div class="field-wrap">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="+20 1XX XXX XXXX">
+        </div>
+        <div class="field-wrap">
+          <label>Project Type <span>*</span></label>
+          <div class="select-wrap">
+            <select name="type" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="graphic">Graphic Design</option>
+              <option value="motion">Motion Graphics</option>
+              <option value="vfx">VFX & Compositing</option>
+              <option value="3d">3D Design</option>
+              <option value="branding">Brand Identity</option>
+              <option value="social">Social Media Content</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="field-wrap">
+        <label>Budget Range</label>
+        <div class="budget-pills" id="budgetPills">
+          <button type="button" class="budget-pill" data-value="< $500">Under $500</button>
+          <button type="button" class="budget-pill" data-value="$500 - $1k">$500 – $1,000</button>
+          <button type="button" class="budget-pill" data-value="$1k - $3k">$1,000 – $3,000</button>
+          <button type="button" class="budget-pill" data-value="$3k+">$3,000+</button>
+          <button type="button" class="budget-pill" data-value="Let's discuss">Let's Discuss</button>
+        </div>
+        <input type="hidden" name="budget" id="budgetInput">
+      </div>
+
+      <!-- Message -->
+      <div class="field-wrap">
+        <label>Your Message <span>*</span></label>
+        <textarea name="message" placeholder="Tell me about your project — what you need, your vision, timeline, and any details that would help..." required></textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-row">
+        <span class="submit-note">
+          <i class="fa-solid fa-lock"></i> Your info is safe &amp; never shared
+        </span>
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <i class="fa-solid fa-paper-plane btn-icon"></i>
+          Send Message
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Success Message -->
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+      <h3>Message Sent!</h3>
+      <p>Thanks for reaching out. I'll review your message and get back to you within 24 hours.</p>
+      <button class="btn-back-form" id="resetBtn">Send Another Message</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="contact-footer">
+  <div class="footer-logo">AY.HAFEZ</div>
+  <div class="footer-copy">© 2026 Ayman Hafez · All Rights Reserved</div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   JSONBin CONFIG
+   ضع الـ Bin ID بتاعك هنا ↓
+══════════════════════════════════════════ */
+const JSONBIN_ID  = '6a0c09f5ee5a733b12e222a4';
+const JSONBIN_KEY = '$2a$10$vY4xGB76klYna9SGy4lZLOubyq68z93XW12wcRvDLV0EoAO2AKIQG';
+const BIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
+
+/* ── CURSOR (desktop) ── */
+const cur  = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if(window.matchMedia('(hover:hover)').matches && cur){
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  (function animRing(){
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.style.transform='translate(-50%,-50%) scale(1.7)'; ring.style.borderColor='rgba(255,60,0,.8)'; });
+    el.addEventListener('mouseleave',()=>{ ring.style.transform='translate(-50%,-50%) scale(1)'; ring.style.borderColor='rgba(255,60,0,.5)'; });
+  });
+}
+
+/* ── BUDGET PILLS ── */
+document.querySelectorAll('.budget-pill').forEach(pill=>{
+  pill.addEventListener('click', ()=>{
+    document.querySelectorAll('.budget-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    document.getElementById('budgetInput').value = pill.dataset.value;
+  });
+});
+
+/* ══════════ JSONBin Helpers ══════════ */
+async function fetchMessages(){
+  const res = await fetch(BIN_URL+'/latest', {
+    headers:{ 'X-Master-Key': JSONBIN_KEY }
+  });
+  const data = await res.json();
+  return data.record.messages || [];
+}
+
+async function saveMessages(msgs){
+  await fetch(BIN_URL, {
+    method: 'PUT',
+    headers:{ 'Content-Type':'application/json', 'X-Master-Key': JSONBIN_KEY },
+    body: JSON.stringify({ messages: msgs })
+  });
+}
+
+/* ── FORM SUBMIT ── */
+const form      = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const successMsg = document.getElementById('successMsg');
+const resetBtn  = document.getElementById('resetBtn');
+
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+
+  const nameF    = form.querySelector('[name="name"]');
+  const emailF   = form.querySelector('[name="email"]');
+  const typeF    = form.querySelector('[name="type"]');
+  const messageF = form.querySelector('[name="message"]');
+  let ok = true;
+
+  [nameF, emailF, typeF, messageF].forEach(f=>{
+    if(!f.value.trim()){ f.style.borderColor='rgba(255,60,0,.7)'; ok=false; }
+    else f.style.borderColor='';
+  });
+  if(!ok) return;
+
+  submitBtn.classList.add('loading');
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+  const newMsg = {
+    id:      (Date.now().toString(36) + Math.random().toString(36).slice(2)),
+    ts:      new Date().toISOString(),
+    read:    false,
+    name:    nameF.value.trim(),
+    email:   emailF.value.trim(),
+    phone:   form.querySelector('[name="phone"]').value.trim(),
+    type:    typeF.options[typeF.selectedIndex].text === 'Select a service' ? '' : typeF.options[typeF.selectedIndex].text,
+    budget:  document.getElementById('budgetInput').value,
+    message: messageF.value.trim()
+  };
+
+  try {
+    const existing = await fetchMessages();
+    existing.push(newMsg);
+    await saveMessages(existing);
+
+    form.style.display = 'none';
+    document.querySelector('.form-header').style.display = 'none';
+    successMsg.classList.add('show');
+  } catch(err) {
+    console.error(err);
+    /* fallback: save locally so message isn't lost */
+    const local = JSON.parse(localStorage.getItem('ayh_messages_fallback')||'[]');
+    local.push(newMsg);
+    localStorage.setItem('ayh_messages_fallback', JSON.stringify(local));
+
+    form.style.display = 'none';
+    document.querySelector('.form-header').style.display = 'none';
+    successMsg.classList.add('show');
+  }
+
+  submitBtn.classList.remove('loading');
+  submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane btn-icon"></i> Send Message';
+});
+
+/* ── RESET FORM ── */
+resetBtn.addEventListener('click', ()=>{
+  form.reset();
+  document.querySelectorAll('.budget-pill').forEach(p=>p.classList.remove('active'));
+  document.getElementById('budgetInput').value = '';
+  form.style.display = 'flex';
+  document.querySelector('.form-header').style.display = 'block';
+  successMsg.classList.remove('show');
+});
+</script>
+</body>
+</html>
