@@ -279,5 +279,21 @@ window.AH_PROJECTS = [
         "url": "https://res.cloudinary.com/dg1qhuwcb/video/upload/v1786447352/Wavev_X_Golds_Final_lntw0f.mp4"
       }
     ]
+  },
+  {
+    "id": "p_1793798685254",
+    "section": "video",
+    "title": "Sahle App_Reveal",
+    "desc": "No description.",
+    "tag": "App Reveal",
+    "tool1": "Adobe After effects",
+    "tool2": "Photoshop",
+    "icon": "fa-clapperboard",
+    "media": [
+      {
+        "type": "vid",
+        "url": "https://res.cloudinary.com/dg1qhuwcb/video/upload/v1793798325/sahle_reveal_before_FFinal_bzxr1s.mp4"
+      }
+    ]
   }
 ];
