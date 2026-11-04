@@ -295,5 +295,37 @@ window.AH_PROJECTS = [
         "url": "https://res.cloudinary.com/dg1qhuwcb/video/upload/v1793798325/sahle_reveal_before_FFinal_bzxr1s.mp4"
       }
     ]
+  },
+  {
+    "id": "p_1793803257903",
+    "section": "video",
+    "title": "WaveX Story",
+    "desc": "No description.",
+    "tag": "Story",
+    "tool1": "After effects",
+    "tool2": "Premeier",
+    "icon": "fa-palette",
+    "media": [
+      {
+        "type": "vid",
+        "url": "https://res.cloudinary.com/dg1qhuwcb/video/upload/v1793803058/WWW_Reel_westin_zq5wyb.mp4"
+      }
+    ]
+  },
+  {
+    "id": "p_1793803357364",
+    "section": "video",
+    "title": "WaveX Story",
+    "desc": "No description.",
+    "tag": "Story",
+    "tool1": "After Effects",
+    "tool2": "Premeier",
+    "icon": "fa-newspaper",
+    "media": [
+      {
+        "type": "img",
+        "url": "https://res.cloudinary.com/dg1qhuwcb/video/upload/v1793803058/WWW_Reel_westin_zq5wyb.mp4"
+      }
+    ]
   }
 ];
